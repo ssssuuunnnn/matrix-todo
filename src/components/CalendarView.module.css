@@ -1,0 +1,401 @@
+.container {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  flex: 1;
+}
+
+/* ── Calendar panel ── */
+.calendarPanel {
+  flex: 1;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  overflow: hidden;
+  min-width: 0;
+}
+
+.monthNav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.monthTitle {
+  flex: 1;
+  font-size: 17px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+  text-align: center;
+}
+
+.navBtn {
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 18px;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, border-color 0.15s;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.navBtn:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+  color: #374151;
+}
+
+.todayBtn {
+  padding: 5px 12px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 7px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+  transition: background 0.15s;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.todayBtn:hover {
+  background: #f3f4f6;
+}
+
+/* ── Grid ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border-top: 1px solid #f3f4f6;
+}
+
+.weekdayHeader {
+  padding: 8px 4px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: #9ca3af;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.emptyCell {
+  border-right: 1px solid #f3f4f6;
+  border-bottom: 1px solid #f3f4f6;
+  min-height: 70px;
+  background: #fafafa;
+}
+
+.dayCell {
+  min-height: 70px;
+  padding: 6px 7px 5px;
+  border-right: 1px solid #f3f4f6;
+  border-bottom: 1px solid #f3f4f6;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.12s;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dayCell:hover {
+  background: #f9fafb;
+}
+
+.today {
+  background: #eff6ff;
+}
+
+.today:hover {
+  background: #dbeafe;
+}
+
+.overdueDay {
+  background: #fff8f8;
+}
+
+.selected {
+  background: #eef2ff !important;
+  box-shadow: inset 0 0 0 2px #6366f1;
+}
+
+.dayNumber {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  line-height: 1;
+}
+
+.today .dayNumber {
+  color: #2563eb;
+}
+
+.dotRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  align-items: center;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dotCompleted {
+  opacity: 0.4;
+}
+
+.dotMore {
+  font-size: 9px;
+  color: #9ca3af;
+  font-weight: 600;
+}
+
+.overdueFlag {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 10px;
+}
+
+/* ── Legend ── */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 12px 20px;
+  border-top: 1px solid #f3f4f6;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.legendDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legendLabel {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+/* ── Side panel ── */
+.sidePanel {
+  width: 280px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sidePlaceholder {
+  background: #fff;
+  border-radius: 12px;
+  padding: 32px 16px;
+  text-align: center;
+  color: #d1d5db;
+  font-size: 13px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.dayDetail {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.dayDetailTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.todayTag {
+  font-size: 11px;
+  font-weight: 600;
+  background: #dbeafe;
+  color: #2563eb;
+  padding: 2px 7px;
+  border-radius: 999px;
+}
+
+.noTask {
+  color: #9ca3af;
+  font-size: 13px;
+  text-align: center;
+  padding: 16px 0;
+  margin: 0;
+}
+
+/* ── No deadline section ── */
+.noDeadlineSection {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.noDeadlineTitle {
+  font-size: 13px;
+  font-weight: 700;
+  color: #6b7280;
+  margin: 0 0 10px;
+}
+
+/* ── Task items (shared) ── */
+.taskList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.taskItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  background: #f9fafb;
+  border-radius: 8px;
+  transition: background 0.12s;
+}
+
+.taskItem:hover {
+  background: #f3f4f6;
+}
+
+.taskCompleted .taskTitle {
+  text-decoration: line-through;
+  color: #9ca3af;
+}
+
+.taskLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.taskCheck {
+  width: 18px;
+  height: 18px;
+  border: 2px solid;
+  border-radius: 4px;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 0;
+}
+
+.taskInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.taskTitle {
+  font-size: 13px;
+  font-weight: 500;
+  color: #1f2937;
+  word-break: break-word;
+  line-height: 1.3;
+}
+
+.taskBadge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 999px;
+  width: fit-content;
+}
+
+.taskActions {
+  display: flex;
+  gap: 3px;
+  flex-shrink: 0;
+}
+
+.actionBtn {
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 5px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 13px;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.12s, color 0.12s;
+  padding: 0;
+}
+
+.actionBtn:hover {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.deleteBtn:hover {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+/* ── RWD ── */
+@media (max-width: 900px) {
+  .container {
+    flex-direction: column;
+  }
+  .sidePanel {
+    width: 100%;
+  }
+}
+
+@media (max-width: 520px) {
+  .dayCell {
+    min-height: 48px;
+    padding: 4px;
+  }
+  .dayNumber {
+    font-size: 12px;
+  }
+  .dot {
+    width: 6px;
+    height: 6px;
+  }
+  .legend {
+    display: none;
+  }
+}

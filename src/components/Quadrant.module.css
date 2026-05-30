@@ -1,0 +1,130 @@
+.quadrant {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  min-height: 0;
+}
+
+.isOver {
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  background: rgba(255, 255, 255, 0.6);
+  flex-shrink: 0;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 999px;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.labels {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.title {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: 11px;
+  color: #9ca3af;
+  line-height: 1.2;
+}
+
+.count {
+  font-size: 13px;
+  font-weight: 700;
+  min-width: 18px;
+  text-align: right;
+}
+
+.addBtn {
+  width: 26px;
+  height: 26px;
+  border: 1.5px solid;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+  padding: 0;
+  font-weight: 400;
+}
+
+.addBtn:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.dropZone {
+  flex: 1;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow-y: auto;
+  min-height: 80px;
+}
+
+.emptyHint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 10px;
+  color: #d1d5db;
+  font-size: 12px;
+  text-align: center;
+  border: 1.5px dashed #e5e7eb;
+  border-radius: 8px;
+  flex: 1;
+}
+
+.todoList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.completedSection {
+  margin-top: 4px;
+}
+
+.completedDivider {
+  font-size: 11px;
+  color: #9ca3af;
+  margin-bottom: 6px;
+  padding: 0 2px;
+}

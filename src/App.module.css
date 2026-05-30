@@ -1,0 +1,239 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background: #f1f5f9;
+}
+
+.header {
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.headerContent {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  font-size: 28px;
+  line-height: 1;
+  color: #4f46e5;
+}
+
+.appTitle {
+  font-size: 18px;
+  font-weight: 800;
+  color: #111827;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.appSubtitle {
+  font-size: 11px;
+  color: #9ca3af;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.totalBadge {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+  background: #f3f4f6;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.viewToggle {
+  display: flex;
+  gap: 2px;
+  background: #f3f4f6;
+  padding: 3px;
+  border-radius: 8px;
+}
+
+.viewBtn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: #6b7280;
+  transition: background 0.15s, color 0.15s;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.viewBtn:hover {
+  color: #374151;
+}
+
+.viewBtnActive {
+  background: #fff;
+  color: #111827;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.addBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
+  background: #4f46e5;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.addBtn:hover {
+  background: #4338ca;
+}
+
+.addBtn:active {
+  transform: scale(0.97);
+}
+
+.addBtn span {
+  font-size: 20px;
+  line-height: 1;
+  font-weight: 300;
+}
+
+.main {
+  flex: 1;
+  padding: 20px;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.axisLabels {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+  min-height: 0;
+}
+
+.axisY {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 0;
+  min-width: 20px;
+}
+
+.axisX {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.axisArrow {
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+.axisText {
+  font-size: 11px;
+  color: #9ca3af;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  writing-mode: horizontal-tb;
+}
+
+.axisY .axisText {
+  writing-mode: vertical-lr;
+  text-orientation: mixed;
+}
+
+.matrixWrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.matrix {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 12px;
+  flex: 1;
+  min-height: 0;
+}
+
+/* RWD: tablet */
+@media (max-width: 768px) {
+  .headerContent {
+    padding: 10px 14px;
+  }
+
+  .appTitle {
+    font-size: 16px;
+  }
+
+  .addBtn {
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+
+  .main {
+    padding: 12px;
+  }
+
+  .axisY {
+    display: none;
+  }
+
+  .matrix {
+    gap: 8px;
+  }
+}
+
+/* RWD: mobile */
+@media (max-width: 520px) {
+  .matrix {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, auto);
+    gap: 10px;
+  }
+
+  .totalBadge {
+    display: none;
+  }
+}
