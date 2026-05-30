@@ -11,7 +11,7 @@ type Action =
   | { type: 'TOGGLE_COMPLETE'; payload: string }
   | { type: 'MOVE'; payload: { id: string; quadrant: QuadrantId } };
 
-function reducer(state: Todo[], action: Action): Todo[] {
+export function reducer(state: Todo[], action: Action): Todo[] {
   switch (action.type) {
     case 'ADD':
       return [
