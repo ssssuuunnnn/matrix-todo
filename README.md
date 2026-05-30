@@ -113,7 +113,35 @@ Header 右側提供三個切換按鈕：
 
 ---
 
-## 七、未來可延伸方向（Out of Scope）
+## 七、測試
+
+### 執行方式
+
+```bash
+npm test            # 單次執行
+npm run test:watch  # 監控模式（開發時即時回饋）
+```
+
+> **Pre-push hook：** 每次 `git push` 前會自動執行測試，任何失敗都會中止推送。
+
+### 測試涵蓋範圍
+
+測試對象：`src/hooks/useTodos.ts` 內的 `reducer` 函數（核心業務邏輯）
+
+| 分類 | 測試項目 |
+|------|----------|
+| **ADD**（6）| 新增一筆 todo、預設 completed 為 false、自動產生 id 與 createdAt、id 不重複、原有資料不受影響、可帶 deadline |
+| **UPDATE**（4）| 更新 title、更新 note 與 deadline、不存在的 id 時 state 不變、只更新目標 todo |
+| **DELETE**（4）| 刪除指定 id、其他 todo 保持不變、不存在的 id 時 state 不變、刪到空陣列 |
+| **TOGGLE_COMPLETE**（5）| false → true、true → false、連續 toggle 兩次回原始值、不存在的 id 時 state 不變、只改目標 todo |
+| **MOVE**（5）| 移動到指定象限、移到相同象限、不存在的 id 時 state 不變、只移動目標 todo、可移動到四個象限任一個 |
+| **Immutability**（3）| ADD / UPDATE / DELETE 皆不修改原始 state |
+
+共 **27 個測試**，工具：[Vitest](https://vitest.dev/)
+
+---
+
+## 八、未來可延伸方向（Out of Scope）
 
 - 雲端同步 / 帳號登入
 - 多人協作
