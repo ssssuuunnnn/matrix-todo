@@ -101,8 +101,7 @@ export default function App() {
 
   return (
     <div className={styles.app}>
-      <AuthBar user={user} loading={loading} onSignIn={signIn} onSignOut={signOut} />
-      <header className={styles.header}>
+      <AuthBar user={user} loading={loading} onSignIn={signIn} onSignOut={signOut} />      <header className={styles.header}>
         <div className={styles.headerContent}>
           <div className={styles.brand}>
             <span className={styles.logo}>⊞</span>
@@ -227,6 +226,26 @@ export default function App() {
           }}
         />
       )}
+
+      <footer className={styles.footer}>
+        <a
+          href="https://github.com/ssssuuunnnn/matrix-todo"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.footerLink}
+        >
+          GitHub
+        </a>
+        <span className={styles.footerDivider}>·</span>
+        <a
+          href="https://www.linkedin.com/in/sun-kuo-tw/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.footerLink}
+        >
+          LinkedIn
+        </a>
+      </footer>
     </div>
   );
 }
