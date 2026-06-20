@@ -227,13 +227,67 @@
 
 /* RWD: mobile */
 @media (max-width: 520px) {
-  .matrix {
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(4, auto);
-    gap: 10px;
+  .headerContent {
+    flex-wrap: wrap;
+    padding: 10px 14px 8px;
+    gap: 8px;
+  }
+
+  .brand {
+    flex: 1 1 auto;
+  }
+
+  .appSubtitle {
+    display: none;
+  }
+
+  .logo {
+    font-size: 22px;
+  }
+
+  .appTitle {
+    font-size: 15px;
+  }
+
+  .headerRight {
+    width: 100%;
+    justify-content: space-between;
+    gap: 8px;
   }
 
   .totalBadge {
     display: none;
+  }
+
+  .viewToggle {
+    flex: 1;
+  }
+
+  .viewBtn {
+    flex: 1;
+    padding: 6px 4px;
+    font-size: 12px;
+    text-align: center;
+  }
+
+  .addBtn {
+    padding: 7px 12px;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  .addBtnText {
+    display: none;
+  }
+
+  .matrix {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, auto);
+    gap: 10px;
+    padding: 0 12px;
+  }
+
+  .main {
+    padding: 12px 0;
   }
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDroppable } from '@dnd-kit/core';
-import type { Todo, QuadrantConfig } from '../types';
+import type { Todo, QuadrantConfig, QuadrantId } from '../types';
 import { TodoCard } from './TodoCard';
 import styles from './Quadrant.module.css';
 
@@ -11,6 +11,7 @@ interface Props {
   onDelete: (id: string) => void;
   onEdit: (todo: Todo) => void;
   onAddClick: (quadrantId: string) => void;
+  onMove: (id: string, quadrant: QuadrantId) => void;
 }
 
 export const Quadrant: React.FC<Props> = ({
@@ -20,6 +21,7 @@ export const Quadrant: React.FC<Props> = ({
   onDelete,
   onEdit,
   onAddClick,
+  onMove,
 }) => {
   const { setNodeRef, isOver } = useDroppable({ id: config.id });
 
@@ -79,6 +81,7 @@ export const Quadrant: React.FC<Props> = ({
               onToggle={onToggle}
               onDelete={onDelete}
               onEdit={onEdit}
+              onMove={onMove}
             />
           ))}
         </div>
@@ -94,6 +97,7 @@ export const Quadrant: React.FC<Props> = ({
                   onToggle={onToggle}
                   onDelete={onDelete}
                   onEdit={onEdit}
+                  onMove={onMove}
                 />
               ))}
             </div>
