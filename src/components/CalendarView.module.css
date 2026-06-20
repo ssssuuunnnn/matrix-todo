@@ -377,6 +377,7 @@
 @media (max-width: 900px) {
   .container {
     flex-direction: column;
+    align-items: stretch;
   }
   .sidePanel {
     width: 100%;
@@ -384,6 +385,13 @@
 }
 
 @media (max-width: 520px) {
+  .container {
+    width: 100%;
+    padding: 0 12px;
+  }
+  .calendarPanel {
+    border-radius: 10px;
+  }
   .dayCell {
     min-height: 48px;
     padding: 4px;

@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import ReactDOM from 'react-dom';
 import { useDraggable } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
-import type { Todo, QuadrantConfig } from '../types';
+import type { Todo, QuadrantConfig, QuadrantId } from '../types';
+import { QUADRANTS } from '../types';
 import styles from './TodoCard.module.css';
 
 function formatDeadline(dateStr: string): string {
@@ -24,16 +26,21 @@ function getDaysUntil(dateStr: string): number {
   return Math.round((date.getTime() - today.getTime()) / 86400000);
 }
 
+const isTouchDevice = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
+
 interface Props {
   todo: Todo;
   quadrant: QuadrantConfig;
   onToggle: (id: string) => void;
   onDelete: (id: string) => void;
   onEdit: (todo: Todo) => void;
+  onMove?: (id: string, quadrant: QuadrantId) => void;
 }
 
-export const TodoCard: React.FC<Props> = ({ todo, quadrant, onToggle, onDelete, onEdit }) => {
+export const TodoCard: React.FC<Props> = ({ todo, quadrant, onToggle, onDelete, onEdit, onMove }) => {
   const [showActions, setShowActions] = useState(false);
+  const [showMovePicker, setShowMovePicker] = useState(false);
+  const moveBtnRef = useRef<HTMLButtonElement>(null);
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
     id: todo.id,
     data: { todo },
@@ -51,6 +58,8 @@ export const TodoCard: React.FC<Props> = ({ todo, quadrant, onToggle, onDelete, 
     : daysUntil <= 3 ? 'soon'
     : 'normal';
 
+  const otherQuadrants = QUADRANTS.filter(q => q.id !== todo.quadrant);
+
   return (
     <div
       ref={setNodeRef}
@@ -61,10 +70,11 @@ export const TodoCard: React.FC<Props> = ({ todo, quadrant, onToggle, onDelete, 
         urgency === 'overdue' ? styles.urgencyOverdue : '',
         urgency === 'soon' ? styles.urgencySoon : '',
       ].join(' ')}
-      onMouseEnter={() => setShowActions(true)}
-      onMouseLeave={() => setShowActions(false)}
+      onMouseEnter={() => !isTouchDevice && setShowActions(true)}
+      onMouseLeave={() => { if (!isTouchDevice) { setShowActions(false); setShowMovePicker(false); } }}
     >
-      <div className={styles.dragHandle} {...listeners} {...attributes} title="拖拽移動">
+      {/* 桌機：拖曳把手；手機：隱藏 */}
+      <div className={`${styles.dragHandle} ${styles.desktopOnly}`} {...listeners} {...attributes} title="拖拽移動">
         <span className={styles.gripIcon}>⠿</span>
       </div>
 
@@ -95,8 +105,45 @@ export const TodoCard: React.FC<Props> = ({ todo, quadrant, onToggle, onDelete, 
         )}
       </div>
 
-      {showActions && (
+      {/* 操作按鈕：桌機 hover 顯示，手機常駐 */}
+      {(showActions || isTouchDevice) && (
         <div className={styles.actions}>
+          {/* 手機：移至其他象限 */}
+          {isTouchDevice && onMove && (
+            <div className={styles.moveWrapper}>
+              <button
+                ref={moveBtnRef}
+                className={styles.actionBtn}
+                onClick={() => setShowMovePicker(true)}
+                title="移至其他象限"
+                aria-label="移至其他象限"
+              >
+                ⇄
+              </button>
+              {showMovePicker && ReactDOM.createPortal(
+                <div className={styles.moveOverlay} onClick={() => setShowMovePicker(false)}>
+                  <div className={styles.moveModal} onClick={e => e.stopPropagation()}>
+                    <p className={styles.moveTitle}>移至象限</p>
+                    {otherQuadrants.map(q => (
+                      <button
+                        key={q.id}
+                        className={styles.moveOption}
+                        style={{ color: q.color, borderColor: q.borderColor, background: q.bgColor }}
+                        onClick={() => { onMove(todo.id, q.id); setShowMovePicker(false); }}
+                      >
+                        {q.label}
+                        <span className={styles.moveOptionSub}>{q.subtitle}</span>
+                      </button>
+                    ))}
+                    <button className={styles.moveCancelBtn} onClick={() => setShowMovePicker(false)}>
+                      取消
+                    </button>
+                  </div>
+                </div>,
+                document.body
+              )}
+            </div>
+          )}
           <button
             className={styles.actionBtn}
             onClick={() => onEdit(todo)}

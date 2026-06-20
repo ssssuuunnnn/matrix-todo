@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import {
   DndContext,
   DragOverlay,
@@ -23,14 +23,32 @@ import styles from './App.module.css';
 
 type ViewMode = 'matrix' | 'list' | 'calendar';
 
+function getViewFromHash(): ViewMode {
+  const hash = window.location.hash.replace('#', '');
+  if (hash === 'list' || hash === 'calendar') return hash;
+  return 'matrix';
+}
+
 export default function App() {
   const { user, loading, signIn, signOut } = useAuth();
   const { todos, addTodo, updateTodo, deleteTodo, toggleComplete, moveTodo } = useTodos(user);
-  const [viewMode, setViewMode] = useState<ViewMode>('matrix');
+  const [viewMode, setViewMode] = useState<ViewMode>(getViewFromHash);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalQuadrant, setModalQuadrant] = useState<QuadrantId>('q4');
   const [editingTodo, setEditingTodo] = useState<Todo | null>(null);
   const [activeTodo, setActiveTodo] = useState<Todo | null>(null);
+
+  const switchView = useCallback((mode: ViewMode) => {
+    setViewMode(mode);
+    window.location.hash = mode;
+  }, []);
+
+  // 支援瀏覽器上一頁/下一頁切換 view
+  useEffect(() => {
+    const onHashChange = () => setViewMode(getViewFromHash());
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, []);
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
@@ -83,8 +101,7 @@ export default function App() {
 
   return (
     <div className={styles.app}>
-      <AuthBar user={user} loading={loading} onSignIn={signIn} onSignOut={signOut} />
-      <header className={styles.header}>
+      <AuthBar user={user} loading={loading} onSignIn={signIn} onSignOut={signOut} />      <header className={styles.header}>
         <div className={styles.headerContent}>
           <div className={styles.brand}>
             <span className={styles.logo}>⊞</span>
@@ -100,21 +117,21 @@ export default function App() {
             <div className={styles.viewToggle}>
               <button
                 className={`${styles.viewBtn} ${viewMode === 'matrix' ? styles.viewBtnActive : ''}`}
-                onClick={() => setViewMode('matrix')}
+                onClick={() => switchView('matrix')}
                 title="矩陣檢視"
               >
                 ⊞ 矩陣
               </button>
               <button
                 className={`${styles.viewBtn} ${viewMode === 'list' ? styles.viewBtnActive : ''}`}
-                onClick={() => setViewMode('list')}
+                onClick={() => switchView('list')}
                 title="清單檢視"
               >
                 ☰ 清單
               </button>
               <button
                 className={`${styles.viewBtn} ${viewMode === 'calendar' ? styles.viewBtnActive : ''}`}
-                onClick={() => setViewMode('calendar')}
+                onClick={() => switchView('calendar')}
                 title="日曆檢視"
               >
                 📅 日曆
@@ -125,7 +142,7 @@ export default function App() {
               onClick={() => handleAddClick('q4')}
               aria-label="新增任務"
             >
-              <span>+</span> 新增任務
+              <span>+</span><span className={styles.addBtnText}> 新增任務</span>
             </button>
           </div>
         </div>
@@ -174,6 +191,7 @@ export default function App() {
                     onDelete={deleteTodo}
                     onEdit={handleEdit}
                     onAddClick={handleAddClick}
+                    onMove={moveTodo}
                   />
                 ))}
               </div>
@@ -208,6 +226,26 @@ export default function App() {
           }}
         />
       )}
+
+      <footer className={styles.footer}>
+        <a
+          href="https://github.com/ssssuuunnnn/matrix-todo"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.footerLink}
+        >
+          GitHub
+        </a>
+        <span className={styles.footerDivider}>·</span>
+        <a
+          href="https://www.linkedin.com/in/sun-kuo-tw/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.footerLink}
+        >
+          LinkedIn
+        </a>
+      </footer>
     </div>
   );
 }
