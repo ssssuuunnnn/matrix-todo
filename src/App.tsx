@@ -14,6 +14,7 @@ import { useAuth } from './hooks/useAuth';
 import { Quadrant } from './components/Quadrant';
 import { ListView } from './components/ListView';
 import { CalendarView } from './components/CalendarView';
+import { ChangelogView } from './components/ChangelogView';
 import { TodoCard } from './components/TodoCard';
 import { TodoModal } from './components/TodoModal';
 import { AuthBar } from './components/AuthBar';
@@ -29,6 +30,8 @@ function getViewFromHash(): ViewMode {
   return 'matrix';
 }
 
+const APP_VERSION = '1.2.0';
+
 export default function App() {
   const { user, loading, signIn, signOut } = useAuth();
   const { todos, addTodo, updateTodo, deleteTodo, toggleComplete, moveTodo } = useTodos(user);
@@ -38,14 +41,29 @@ export default function App() {
   const [editingTodo, setEditingTodo] = useState<Todo | null>(null);
   const [activeTodo, setActiveTodo] = useState<Todo | null>(null);
 
+  const [showChangelog, setShowChangelog] = useState(() => window.location.hash === '#changelog');
+
   const switchView = useCallback((mode: ViewMode) => {
     setViewMode(mode);
+    setShowChangelog(false);
     window.location.hash = mode;
+  }, []);
+
+  const openChangelog = useCallback(() => {
+    setShowChangelog(true);
+    window.location.hash = 'changelog';
   }, []);
 
   // 支援瀏覽器上一頁/下一頁切換 view
   useEffect(() => {
-    const onHashChange = () => setViewMode(getViewFromHash());
+    const onHashChange = () => {
+      if (window.location.hash === '#changelog') {
+        setShowChangelog(true);
+      } else {
+        setShowChangelog(false);
+        setViewMode(getViewFromHash());
+      }
+    };
     window.addEventListener('hashchange', onHashChange);
     return () => window.removeEventListener('hashchange', onHashChange);
   }, []);
@@ -149,7 +167,9 @@ export default function App() {
       </header>
 
       <main className={styles.main}>
-        {viewMode === 'list' ? (
+        {showChangelog ? (
+          <ChangelogView onBack={() => switchView(viewMode)} />
+        ) : viewMode === 'list' ? (
           <ListView
             todos={todos}
             onToggle={toggleComplete}
@@ -228,6 +248,10 @@ export default function App() {
       )}
 
       <footer className={styles.footer}>
+        <span className={styles.footerVersion}>v{APP_VERSION}</span>
+        <span className={styles.footerDivider}>·</span>
+        <button className={styles.footerBtn} onClick={openChangelog}>更新紀錄</button>
+        <span className={styles.footerDivider}>·</span>
         <a
           href="https://github.com/ssssuuunnnn/matrix-todo"
           target="_blank"
