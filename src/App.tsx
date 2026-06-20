@@ -10,11 +10,13 @@ import {
   type DragStartEvent,
 } from '@dnd-kit/core';
 import { useTodos } from './hooks/useTodos';
+import { useAuth } from './hooks/useAuth';
 import { Quadrant } from './components/Quadrant';
 import { ListView } from './components/ListView';
 import { CalendarView } from './components/CalendarView';
 import { TodoCard } from './components/TodoCard';
 import { TodoModal } from './components/TodoModal';
+import { AuthBar } from './components/AuthBar';
 import { QUADRANTS } from './types';
 import type { Todo, QuadrantId } from './types';
 import styles from './App.module.css';
@@ -22,7 +24,8 @@ import styles from './App.module.css';
 type ViewMode = 'matrix' | 'list' | 'calendar';
 
 export default function App() {
-  const { todos, addTodo, updateTodo, deleteTodo, toggleComplete, moveTodo } = useTodos();
+  const { user, loading, signIn, signOut } = useAuth();
+  const { todos, addTodo, updateTodo, deleteTodo, toggleComplete, moveTodo } = useTodos(user);
   const [viewMode, setViewMode] = useState<ViewMode>('matrix');
   const [modalOpen, setModalOpen] = useState(false);
   const [modalQuadrant, setModalQuadrant] = useState<QuadrantId>('q4');
@@ -80,6 +83,7 @@ export default function App() {
 
   return (
     <div className={styles.app}>
+      <AuthBar user={user} loading={loading} onSignIn={signIn} onSignOut={signOut} />
       <header className={styles.header}>
         <div className={styles.headerContent}>
           <div className={styles.brand}>
