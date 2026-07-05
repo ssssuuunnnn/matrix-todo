@@ -3,9 +3,9 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  base: '/matrix-todo/',
-  test: {
-    environment: 'node',
-  },
+    plugins: [react()],
+    base: '/',
+    test: {
+          environment: 'node',
+    },
 })
